@@ -62,7 +62,7 @@ class CalculatorVC: UIViewController {
         }
         
         splitInputView.snp.makeConstraints { make in
-            make.height.equalTo(48)
+            make.height.equalTo(56)
         }
     }
 }

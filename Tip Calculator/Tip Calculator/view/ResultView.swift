@@ -9,7 +9,7 @@ import UIKit
 
 class ResultView: UIView {
     private let headerLabel: UILabel = {
-        LabelFactory.build(text: "Total per person", font: ThemeFont.demibold(ofSize: 16))
+        LabelFactory.build(text: "Total per person", font: ThemeFont.demibold(ofSize: 18))
     }()
     
     private let amountPerPersonLabel: UILabel = {
@@ -17,6 +17,7 @@ class ResultView: UIView {
         let text = NSMutableAttributedString(string: "$000", attributes: [.font : ThemeFont.bold(ofSize: 36)])
         text.addAttributes([.font : ThemeFont.demibold(ofSize: 18)], range: NSMakeRange(0, 1))
         label.attributedText = text
+        label.textAlignment = .center
         return label
     }()
     
@@ -26,15 +27,27 @@ class ResultView: UIView {
         return view
     }()
     
+    private let hStackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [
+            AmountView(title: "Total bill", amount: 000, textAlignment: .left),
+            UIView(),
+            AmountView(title: "Total tip", amount: 000, textAlignment: .right)
+        ])
+        view.axis = .horizontal
+        view.distribution = .fillEqually
+        return view
+    }()
+    
     private lazy var vStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
             headerLabel,
             amountPerPersonLabel,
-            dividerView
+            dividerView,
+            buildSpacerView(height: 0),
+            hStackView
         ])
         view.axis = .vertical
-        view.spacing = 24
-        view.alignment = .center
+        view.spacing = 8
         return view
     }()
     
@@ -64,5 +77,13 @@ class ResultView: UIView {
         }
         
         addShadow(offset: CGSize(width: 0, height: 3), color: ThemeColor.bg, radius: 12, opacity: 0.1)
+    }
+    
+    private func buildSpacerView(height: CGFloat) -> UIView {
+        let view = UIView()
+        view.snp.makeConstraints { make in
+            make.height.equalTo(height)
+        }
+        return view
     }
 }
