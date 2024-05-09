@@ -59,10 +59,17 @@ class SplitInputView: UIView {
         super.init(frame: .zero)
         
         layout()
+        observe()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func observe() {
+        splitSubject.sink { [unowned self] value in
+            quantityLabel.text = String(value)
+        }.store(in: &cancellables)
     }
     
     private func layout() {
