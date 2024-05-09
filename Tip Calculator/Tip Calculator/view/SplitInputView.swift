@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 
 class SplitInputView: UIView {
     private let headerView: HeaderView = {
@@ -15,22 +17,18 @@ class SplitInputView: UIView {
     }()
     
     private lazy var decrementButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("-", for: .normal)
-        button.backgroundColor = ThemeColor.primary
-        button.tintColor = .white
-        button.titleLabel?.font = ThemeFont.bold(ofSize: 20)
-        button.addRoundedCorners(corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner], radius: 8)
+        let button = buildButton(title: "-", corners: [.layerMinXMinYCorner, .layerMinXMaxYCorner])
+        button.tapPublisher.sink { [unowned self] _ in
+            splitSubject.send(splitSubject.value == 1 ? 1 : splitSubject.value - 1)
+        }.store(in: &cancellables)
         return button
     }()
     
     private lazy var increaseButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("+", for: .normal)
-        button.backgroundColor = ThemeColor.primary
-        button.tintColor = .white
-        button.titleLabel?.font = ThemeFont.bold(ofSize: 20)
-        button.addRoundedCorners(corners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner], radius: 8)
+        let button = buildButton(title: "+", corners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])
+        button.tapPublisher.sink { [unowned self] _ in
+            splitSubject.send(splitSubject.value + 1)
+        }.store(in: &cancellables)
         return button
     }()
     
@@ -50,6 +48,12 @@ class SplitInputView: UIView {
         view.spacing = 0
         return view
     }()
+    
+    private let splitSubject = CurrentValueSubject<Int, Never>(1)
+    var valuePublisher: AnyPublisher<Int, Never> {
+        return splitSubject.removeDuplicates().eraseToAnyPublisher()
+    }
+    private var cancellables = Set<AnyCancellable>()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -80,5 +84,15 @@ class SplitInputView: UIView {
                 make.height.equalTo(button.snp.width)
             }
         }
+    }
+    
+    private func buildButton(title: String, corners: CACornerMask) -> UIButton {
+        let button = UIButton()
+        button.setTitle(title, for: .normal)
+        button.backgroundColor = ThemeColor.primary
+        button.tintColor = .white
+        button.titleLabel?.font = ThemeFont.bold(ofSize: 20)
+        button.addRoundedCorners(corners: corners, radius: 8)
+        return button
     }
 }
