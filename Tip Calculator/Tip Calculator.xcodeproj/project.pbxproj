@@ -38,6 +38,9 @@
 		04BD8C762BEC78E100DE50D3 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD8C752BEC78E100DE50D3 /* Double+Extension.swift */; };
 		04BD8C782BEC78EC00DE50D3 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD8C772BEC78EC00DE50D3 /* String+Extension.swift */; };
 		04BD8C7A2BEC7F6F00DE50D3 /* UIResponder+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD8C792BEC7F6F00DE50D3 /* UIResponder+Extension.swift */; };
+		04BD8C7C2BECAEBC00DE50D3 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD8C7B2BECAEBC00DE50D3 /* Int+Extension.swift */; };
+		04BD8C7F2BECBB7000DE50D3 /* click.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 04BD8C7E2BECBB7000DE50D3 /* click.m4a */; };
+		04BD8C822BECBC5400DE50D3 /* AudioPlayerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BD8C812BECBC5400DE50D3 /* AudioPlayerService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +91,9 @@
 		04BD8C752BEC78E100DE50D3 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		04BD8C772BEC78EC00DE50D3 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		04BD8C792BEC7F6F00DE50D3 /* UIResponder+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponder+Extension.swift"; sourceTree = "<group>"; };
+		04BD8C7B2BECAEBC00DE50D3 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		04BD8C7E2BECBB7000DE50D3 /* click.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = click.m4a; sourceTree = "<group>"; };
+		04BD8C812BECBC5400DE50D3 /* AudioPlayerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,8 @@
 		0445E7532BEA1EB9000FA496 /* Tip Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				04BD8C802BECBC4600DE50D3 /* service */,
+				04BD8C7D2BECBB5800DE50D3 /* resource */,
 				04BD8C722BEC70A300DE50D3 /* viewmodel */,
 				04BD8C6D2BEB2B9300DE50D3 /* model */,
 				04BD8C642BEA31F100DE50D3 /* factory */,
@@ -187,13 +195,13 @@
 		04BD8C512BEA2A0700DE50D3 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				04BD8C692BEB212A00DE50D3 /* AmountView.swift */,
+				04BD8C572BEA2A3F00DE50D3 /* BillInputView.swift */,
+				04BD8C6B2BEB2B6200DE50D3 /* HeaderView.swift */,
 				04BD8C532BEA2A2600DE50D3 /* LogoView.swift */,
 				04BD8C552BEA2A3000DE50D3 /* ResultView.swift */,
-				04BD8C572BEA2A3F00DE50D3 /* BillInputView.swift */,
-				04BD8C592BEA2A4E00DE50D3 /* TipInputView.swift */,
 				04BD8C5B2BEA2A5E00DE50D3 /* SplitInputView.swift */,
-				04BD8C692BEB212A00DE50D3 /* AmountView.swift */,
-				04BD8C6B2BEB2B6200DE50D3 /* HeaderView.swift */,
+				04BD8C592BEA2A4E00DE50D3 /* TipInputView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -201,11 +209,12 @@
 		04BD8C522BEA2A0B00DE50D3 /* extension */ = {
 			isa = PBXGroup;
 			children = (
-				04BD8C622BEA2AC800DE50D3 /* UIColor+Extension.swift */,
-				04BD8C672BEA355900DE50D3 /* UIView+Extension.swift */,
 				04BD8C752BEC78E100DE50D3 /* Double+Extension.swift */,
+				04BD8C7B2BECAEBC00DE50D3 /* Int+Extension.swift */,
 				04BD8C772BEC78EC00DE50D3 /* String+Extension.swift */,
+				04BD8C622BEA2AC800DE50D3 /* UIColor+Extension.swift */,
 				04BD8C792BEC7F6F00DE50D3 /* UIResponder+Extension.swift */,
+				04BD8C672BEA355900DE50D3 /* UIView+Extension.swift */,
 			);
 			path = extension;
 			sourceTree = "<group>";
@@ -242,6 +251,22 @@
 				04BD8C732BEC70B000DE50D3 /* CalculatorVM.swift */,
 			);
 			path = viewmodel;
+			sourceTree = "<group>";
+		};
+		04BD8C7D2BECBB5800DE50D3 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				04BD8C7E2BECBB7000DE50D3 /* click.m4a */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
+		04BD8C802BECBC4600DE50D3 /* service */ = {
+			isa = PBXGroup;
+			children = (
+				04BD8C812BECBC5400DE50D3 /* AudioPlayerService.swift */,
+			);
+			path = service;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -364,6 +389,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BD8C7F2BECBB7000DE50D3 /* click.m4a in Resources */,
 				0445E75E2BEA1EBA000FA496 /* Assets.xcassets in Resources */,
 				0445E7612BEA1EBA000FA496 /* Base in Resources */,
 			);
@@ -395,12 +421,14 @@
 				0445E7592BEA1EB9000FA496 /* CalculatorVC.swift in Sources */,
 				04BD8C682BEA355900DE50D3 /* UIView+Extension.swift in Sources */,
 				04BD8C542BEA2A2600DE50D3 /* LogoView.swift in Sources */,
+				04BD8C7C2BECAEBC00DE50D3 /* Int+Extension.swift in Sources */,
 				04BD8C5E2BEA2A7E00DE50D3 /* ThemeColor.swift in Sources */,
 				04BD8C632BEA2AC800DE50D3 /* UIColor+Extension.swift in Sources */,
 				04BD8C582BEA2A3F00DE50D3 /* BillInputView.swift in Sources */,
 				04BD8C7A2BEC7F6F00DE50D3 /* UIResponder+Extension.swift in Sources */,
 				04BD8C782BEC78EC00DE50D3 /* String+Extension.swift in Sources */,
 				04BD8C562BEA2A3000DE50D3 /* ResultView.swift in Sources */,
+				04BD8C822BECBC5400DE50D3 /* AudioPlayerService.swift in Sources */,
 				0445E7552BEA1EB9000FA496 /* AppDelegate.swift in Sources */,
 				04BD8C612BEA2AB100DE50D3 /* ThemeFont.swift in Sources */,
 				04BD8C762BEC78E100DE50D3 /* Double+Extension.swift in Sources */,

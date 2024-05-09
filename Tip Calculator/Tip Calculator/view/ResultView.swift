@@ -14,7 +14,7 @@ class ResultView: UIView {
     
     private let amountPerPersonLabel: UILabel = {
         let label = UILabel()
-        let text = NSMutableAttributedString(string: "$000", attributes: [.font : ThemeFont.bold(ofSize: 36)])
+        let text = NSMutableAttributedString(string: "$0", attributes: [.font : ThemeFont.bold(ofSize: 36)])
         text.addAttributes([.font : ThemeFont.demibold(ofSize: 18)], range: NSMakeRange(0, 1))
         label.attributedText = text
         label.textAlignment = .center
@@ -27,11 +27,20 @@ class ResultView: UIView {
         return view
     }()
     
-    private let hStackView: UIStackView = {
+    private let totalBillView: AmountView = {
+        let view = AmountView(title: "Total bill", textAlignment: .left)
+        return view
+    }()
+    
+    private let totalTipView: AmountView = {
+        let view = AmountView(title: "Total tip", textAlignment: .right)
+        return view
+    }()
+    
+    private lazy var hStackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [
-            AmountView(title: "Total bill", amount: 000, textAlignment: .left),
-            UIView(),
-            AmountView(title: "Total tip", amount: 000, textAlignment: .right)
+            totalBillView,
+            totalTipView
         ])
         view.axis = .horizontal
         view.distribution = .fillEqually
@@ -85,5 +94,14 @@ class ResultView: UIView {
             make.height.equalTo(height)
         }
         return view
+    }
+    
+    func configure(result: Result) {
+        let text = NSMutableAttributedString(string: result.amountPerPerson.currencyFormatted, attributes: [.font : ThemeFont.bold(ofSize: 36)])
+        text.addAttributes([.font : ThemeFont.demibold(ofSize: 18)], range: NSMakeRange(0, 1))
+        amountPerPersonLabel.attributedText = text
+        
+        totalBillView.configure(amount: result.totalBill)
+        totalTipView.configure(amount: result.totalTip)
     }
 }

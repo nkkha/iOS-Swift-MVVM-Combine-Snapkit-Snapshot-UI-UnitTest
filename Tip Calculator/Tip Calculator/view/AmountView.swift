@@ -9,12 +9,10 @@ import UIKit
 
 class AmountView: UIView {
     private var title: String
-    private var amount: Int
     private var textAlignment: NSTextAlignment
     
-    init(title: String, amount: Int, textAlignment: NSTextAlignment) {
+    init(title: String, textAlignment: NSTextAlignment) {
         self.title = title
-        self.amount = amount
         self.textAlignment = textAlignment
         super.init(frame: .zero)
         layout()
@@ -26,7 +24,7 @@ class AmountView: UIView {
     
     private lazy var amountLabel: UILabel = {
         let label = UILabel()
-        let text = NSMutableAttributedString(string: "$\(amount)", attributes: [.font: ThemeFont.bold(ofSize: 24)])
+        let text = NSMutableAttributedString(string: "$0", attributes: [.font: ThemeFont.bold(ofSize: 24)])
         text.addAttributes([.font: ThemeFont.bold(ofSize: 16)], range: NSMakeRange(0, 1))
         label.attributedText = text
         label.textColor = ThemeColor.primary
@@ -54,5 +52,11 @@ class AmountView: UIView {
         vStackView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
+    }
+    
+    func configure(amount: Double) {
+        let text = NSMutableAttributedString(string: amount.currencyFormatted, attributes: [.font: ThemeFont.bold(ofSize: 24)])
+        text.addAttributes([.font: ThemeFont.bold(ofSize: 16)], range: NSMakeRange(0, 1))
+        amountLabel.attributedText = text
     }
 }

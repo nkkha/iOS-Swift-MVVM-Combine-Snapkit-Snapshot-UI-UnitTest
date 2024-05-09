@@ -29,6 +29,25 @@ class CalculatorVC: UIViewController {
         return stackView
     }()
     
+    private lazy var viewTapPublisher: AnyPublisher<Void, Never> = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        view.addGestureRecognizer(tapGesture)
+        let tapPublisher = tapGesture.tapPublisher.flatMap { _ in
+            Just(())
+        }.eraseToAnyPublisher()
+        return tapPublisher
+    }()
+
+    private lazy var logoViewTapPublisher: AnyPublisher<Void, Never> = {
+        let tapGesture = UITapGestureRecognizer(target: self, action: nil)
+        logoView.addGestureRecognizer(tapGesture)
+        tapGesture.numberOfTapsRequired = 2
+        let tapPublisher = tapGesture.tapPublisher.flatMap { _ in
+            Just(())
+        }.eraseToAnyPublisher()
+        return tapPublisher
+    }()
+    
     private let vm = CalculatorVM()
     private var cancellables = Set<AnyCancellable>()
 
@@ -37,17 +56,45 @@ class CalculatorVC: UIViewController {
 
         layout()
         bind()
+        observe()
+    }
+    
+    private func observe() {
+        viewTapPublisher.sink { [unowned self] _ in
+            view.endEditing(true)
+        }.store(in: &cancellables)
     }
     
     private func bind() {
         let input = CalculatorVM.Input(billPublisher: billInputView.valuePublisher,
                                        tipPublisher: tipInputView.valuePublisher,
-                                       splitPublisher: splitInputView.valuePublisher)
+                                       splitPublisher: splitInputView.valuePublisher,
+                                       logoViewTapPublisher: logoViewTapPublisher)
         
         let output = vm.transform(input: input)
         
-        output.updateViewPublisher.sink { result in
-            print(">>> Result: \(result)")
+        output.updateViewPublisher.sink { [unowned self] result in
+            resultView.configure(result: result)
+        }.store(in: &cancellables)
+        
+        output.resetCalculatorPublisher.sink { [unowned self] _ in
+            billInputView.reset()
+            tipInputView.reset()
+            splitInputView.reset()
+            
+            UIView.animate(
+                withDuration: 0.5,
+                delay: 0.1,
+                usingSpringWithDamping: 5,
+                initialSpringVelocity: 0.5,
+                options: .curveEaseInOut)
+            {
+                self.logoView.transform = .init(scaleX: 1.5, y: 1.5)
+            } completion: { _ in
+                UIView.animate(withDuration: 0.5) {
+                    self.logoView.transform = .identity
+                }
+            }
         }.store(in: &cancellables)
     }
     

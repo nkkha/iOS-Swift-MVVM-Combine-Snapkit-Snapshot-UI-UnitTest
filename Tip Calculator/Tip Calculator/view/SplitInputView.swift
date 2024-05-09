@@ -102,4 +102,8 @@ class SplitInputView: UIView {
         button.addRoundedCorners(corners: corners, radius: 8)
         return button
     }
+    
+    func reset() {
+        splitSubject.send(1)
+    }
 }

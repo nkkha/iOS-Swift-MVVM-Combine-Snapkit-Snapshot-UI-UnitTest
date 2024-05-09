@@ -173,4 +173,8 @@ class TipInputView: UIView {
         }()
         parentViewController?.present(alertController, animated: true)
     }
+    
+    func reset() {
+        tipSubject.send(Tip.none)
+    }
 }
